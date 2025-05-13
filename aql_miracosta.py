@@ -117,7 +117,7 @@ def hybrid_search(query, base_url, top_k=5):
         
         # Now boost relevance scores based on keyword presence
         for match in matches:
-            text = match.get("metadata", {}).get("text", "").lower()
+            text = match.get("metadata", {}).get("text_content", "").lower()
             
             # Calculate keyword boost factor
             keyword_matches = sum(1 for keyword in keywords if keyword in text)
@@ -220,7 +220,7 @@ if st.button("Submit") or (st.session_state.question and not question_input):
                 
                 for i, match in enumerate(matches):
                     metadata = match.get("metadata", {})
-                    text = metadata.get("text", "No text available")
+                    text = metadata.get("text_content", "No text available")
                     url = metadata.get("url", "")
                     title = metadata.get("title", "")
                     
