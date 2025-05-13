@@ -3,11 +3,11 @@ import json
 import requests
 
 # Hide sidebar
-st.set_page_config(page_title="Merced College Q&A", page_icon="🎓", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="MiraCosta College Q&A", page_icon="🎓", initial_sidebar_state="collapsed")
 
 # Add logo in the upper right corner
 st.markdown("""
-<img src="https://coursedog-images-public.s3.us-east-2.amazonaws.com/undefined/MC-primary-logo.png?text=Logo" style="position: absolute; top: 40px; right: 20px; width: 80px; z-index: 1000;">
+<img src="https://seekvectorlogo.com/wp-content/uploads/2018/10/miracosta-college-vector-logo-small.png?text=Logo" style="position: absolute; top: 40px; right: 20px; width: 80px; z-index: 1000;">
 """, unsafe_allow_html=True)
 
 # Custom CSS with updated styling
@@ -20,7 +20,7 @@ st.markdown("""
 
   /* 2) Yellow backdrop outside the main container */
   .stApp {
-    background-color: #C38F00 !important;
+    background-color: #00B8E7 !important;
     padding: 30px;
   }
 
