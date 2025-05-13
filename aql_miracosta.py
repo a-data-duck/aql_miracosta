@@ -3,11 +3,11 @@ import json
 import requests
 
 # Hide sidebar
-st.set_page_config(page_title="MiraCosta College Q&A", page_icon="🎓", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Merced College Q&A", page_icon="🎓", initial_sidebar_state="collapsed")
 
 # Add logo in the upper right corner
 st.markdown("""
-<img src="https://seekvectorlogo.com/wp-content/uploads/2018/10/miracosta-college-vector-logo-small.png?text=Logo" style="position: absolute; top: 40px; right: 20px; width: 80px; z-index: 1000;">
+<img src="https://coursedog-images-public.s3.us-east-2.amazonaws.com/undefined/MC-primary-logo.png?text=Logo" style="position: absolute; top: 40px; right: 20px; width: 80px; z-index: 1000;">
 """, unsafe_allow_html=True)
 
 # Custom CSS with updated styling
@@ -20,7 +20,7 @@ st.markdown("""
 
   /* 2) Yellow backdrop outside the main container */
   .stApp {
-    background-color: #00B8E7 !important;
+    background-color: #C38F00 !important;
     padding: 30px;
   }
 
@@ -64,9 +64,9 @@ st.markdown("""
   }
   /* A hook: pick the button immediately AFTER a <span id="blue-btn"> */
   .element-container:has(#blue-btn) + div button {
-    background-color: #72BF44 !important;
+    background-color: #000080 !important;
     color: white !important;
-    border-color: #72BF44 !important;
+    border-color: #000080 !important;
   }
 </style>
 """, unsafe_allow_html=True)
@@ -76,15 +76,15 @@ if "question" not in st.session_state:
     st.session_state.question = ""
 
 # Set title
-st.title("MiraCosta College Q&A")
+st.title("Merced College Q&A")
 
 # Main text with Bebas Neue font
-st.markdown('<div class="bebas-text">Ask questions about MiraCosta College\'s programs, services, and more.</div>', unsafe_allow_html=True)
+st.markdown('<div class="bebas-text">Ask questions about Merced College\'s programs, services, and more.</div>', unsafe_allow_html=True)
 
 # Configure API keys (now hidden from sidebar)
 OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY", "")
 PINECONE_API_KEY = st.secrets.get("PINECONE_API_KEY", "")
-PINECONE_URL = "https://miracosta-docs-h3y3rrq.svc.aped-4627-b74a.pinecone.io"
+PINECONE_URL = "https://mccd-docs-h3y3rrq.svc.aped-4627-b74a.pinecone.io"
 
 if not OPENAI_API_KEY or not PINECONE_API_KEY:
     st.error("Missing API keys. Please contact the administrator.")
@@ -194,11 +194,11 @@ def generate_answer(question, context):
     }
     
     # Enhanced prompt to focus on specific information
-    system_prompt = """You are a helpful assistant for MiraCosta College, a California community college.
+    system_prompt = """You are a helpful assistant for Merced College, a California community college.
 Answer questions based ONLY on the provided context. If you don't know the answer, say so.
-Be specific about services, programs, and resources offered by MiraCosta.
+Be specific about services, programs, and resources offered by Merced.
 When answering about services like wellness services, ALWAYS mention the specific provider if it appears in the context.
-Do NOT generate images or respond to questions unrelated to MiraCosta College."""
+Do NOT generate images or respond to questions unrelated to Merced College."""
     
     data = {
         "model": "gpt-4.1-mini",
@@ -232,12 +232,12 @@ def set_question(text):
 
 with col1:
     if st.button("Who provides wellness services?"):
-        set_question("Who provides wellness services at MiraCosta?")
-    if st.button("What is tuition at MiraCosta?"):
-        set_question("What is tuition at MiraCosta?")
+        set_question("Who provides wellness services at Merced?")
+    if st.button("What is tuition at Merced?"):
+        set_question("What is tuition at Merced?")
 with col2:
     if st.button("What programs are offered?"):
-        set_question("What programs does MiraCosta offer?")
+        set_question("What programs does Merced offer?")
     if st.button("How long to complete a program?"):
         set_question("How long does it take to complete a program?")
 
