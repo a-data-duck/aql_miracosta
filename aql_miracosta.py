@@ -5,22 +5,69 @@ import requests
 # Hide sidebar
 st.set_page_config(page_title="MiraCosta College Q&A", page_icon="🎓", initial_sidebar_state="collapsed")
 
-# Custom CSS to hide the sidebar completely
+# Add logo in the upper right corner
+st.markdown("""
+<img src="https://seekvectorlogo.com/wp-content/uploads/2018/10/miracosta-college-vector-logo-small.png?text=Logo" style="position: absolute; top: 40px; right: 20px; width: 80px; z-index: 1000;">
+""", unsafe_allow_html=True)
+
+# Custom CSS with updated styling
 st.markdown("""
 <style>
-    [data-testid="collapsedControl"] {display: none;}
-    section[data-testid="stSidebar"] {display: none;}
-    .big-font {
-        font-size: 24px;
-        line-height: 1.5;
-        margin-bottom: 20px;
-    }
-    .small-italic {
-        font-size: 14px;
-        font-style: italic;
-        color: #666;
-        margin-top: 20px;
-    }
+  /* 1) Import fonts */
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap');
+
+  /* 2) Yellow backdrop outside the main container */
+  .stApp {
+    background-color: #00B8E7 !important;
+    padding: 30px;
+  }
+
+  /* 3) Centered white box at 60% width with border */
+  .block-container {
+    max-width: 60% !important;
+    margin: 0 auto !important;
+    background-color: white !important;
+    border: 1px solid #333 !important;
+    border-radius: 8px !important;
+    padding: 30px !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+  }
+
+  /* 4) Font assignments */
+  body, .stApp, p, div, h1, h2, h3, span, .stMarkdown, .stTextInput, input {
+    font-family: 'Source Serif 4', serif !important;
+  }
+  .bebas-text {
+    font-family: 'Bebas Neue', sans-serif !important;
+    font-size: 24px;
+    line-height: 1.2;
+  }
+  .stButton > button {
+    font-family: 'DM Sans', sans-serif !important;
+  }
+
+  /* 5) Default all buttons light gray */
+  .stButton > button {
+    background-color: #f0f0f0 !important;
+    color: #000 !important;
+    border-color: #ccc !important;
+  }
+
+  /* 6) Override only the Submit button */
+  /* Use the Streamlit attribute for the form-submit button */
+  button[kind="formSubmit"] {
+    background-color: #00205C !important;
+    color: #fff !important;
+    border-color: #00205C !important;
+  }
+  /* A hook: pick the button immediately AFTER a <span id="blue-btn"> */
+  .element-container:has(#blue-btn) + div button {
+    background-color: #72BF44 !important;
+    color: white !important;
+    border-color: #72BF44 !important;
+  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -30,6 +77,9 @@ if "question" not in st.session_state:
 
 # Set title
 st.title("MiraCosta College Q&A")
+
+# Main text with Bebas Neue font
+st.markdown('<div class="bebas-text">Ask questions about MiraCosta College\'s programs, services, and more.</div>', unsafe_allow_html=True)
 
 # Configure API keys (now hidden from sidebar)
 OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY", "")
@@ -173,9 +223,6 @@ Do NOT generate images or respond to questions unrelated to MiraCosta College.""
     return result["choices"][0]["message"]["content"]
 
 # Main interface
-st.write("Ask questions about MiraCosta College's programs, services, and more.")
-
-# Example questions moved to main interface as buttons
 st.write("Try an example:")
 col1, col2 = st.columns(2)
 
@@ -202,6 +249,7 @@ if question_input != st.session_state.question:
     st.session_state.question = question_input
 
 # Submit button
+st.markdown('<span id="blue-btn"></span>', unsafe_allow_html=True)
 if st.button("Submit") or (st.session_state.question and not question_input):
     if not st.session_state.question:
         st.warning("Please enter a question or select an example.")
@@ -231,7 +279,7 @@ if st.button("Submit") or (st.session_state.question and not question_input):
                 answer = generate_answer(st.session_state.question, context)
                 
                 # Display answer in larger font (without a heading)
-                st.markdown(f'<div class="big-font">{answer}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="big-font">{answer}</div><br><br>', unsafe_allow_html=True)
                 
                 # Display sources with smaller, italicized heading
                 st.markdown('<div class="small-italic">sources</div>', unsafe_allow_html=True)
